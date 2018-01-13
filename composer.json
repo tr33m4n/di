@@ -1,0 +1,16 @@
+{
+    "name": "danieldoyle/happy-di",
+    "description": "A very happy DI",
+    "authors": [
+        {
+            "name": "Daniel Doyle",
+            "email": "tr33m4n@googlemail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"HappyDi\\": "src/"}
+    },
+    "require-dev": {
+    }
+}
