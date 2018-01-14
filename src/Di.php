@@ -54,13 +54,13 @@ class Di
             throw new MissingClassException(sprintf('%s does not exist!', $className));
         }
 
-        // Get class name from config
-        if (!$classFromConfig = $this->config->get($className)) {
+        // Get params from config, return class string if entry has no params
+        if (!$paramsFromConfig = $this->config->get($className)) {
             throw new MissingConfigException(sprintf('%s does not exist in the DI config!', $className));
         }
 
         // Instantiate class from DI
-        return $this->getInstantiatedClass($className, is_array($classFromConfig) ? $classFromConfig : []);
+        return $this->getInstantiatedClass($className, is_array($paramsFromConfig) ? $paramsFromConfig : []);
     }
 
     /**
