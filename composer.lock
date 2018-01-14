@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "../HappyUtilities",
-                "reference": "08ada448e133e91f9c299c17df58c713520799df"
+                "reference": "793f46dbd794b9fc3863a90346f8506a9015d958"
             },
             "type": "library",
             "autoload": {
@@ -27,7 +27,7 @@
                 }
             ],
             "description": "A very happy utility collection",
-            "time": "2018-01-14T00:51:22+00:00"
+            "time": "2018-01-14T13:20:52+00:00"
         }
     ],
     "packages-dev": [],

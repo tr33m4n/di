@@ -14,11 +14,6 @@ use HappyUtilities\Helpers\Config as UtilityConfig;
 class Config extends UtilityConfig
 {
     /**
-     * Config path override
-     */
-    const HAPPYUTILITIES_CONFIG_PATH = '/../../config';
-
-    /**
      * Get class from config. If the key does not exist, flip the config and check again. This allows to return a class
      * name without any arguments associated with it
      *

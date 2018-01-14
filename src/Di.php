@@ -171,13 +171,13 @@ class Di
     }
 
     /**
-     * Get config
+     * Get DI config
      *
      * @author Daniel Doyle <dd@amp.co>
      * @return \HappyDi\Helpers\Config
      */
     protected function getConfig() : Config
     {
-        return new Config();
+        return new Config('di');
     }
 }
