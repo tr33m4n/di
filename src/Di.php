@@ -4,7 +4,7 @@ namespace HappyDi;
 
 use HappyDi\Helpers\Config;
 use HappyDi\Exceptions\MissingClassException;
-use HappyDi\Exceptions\MissingConfigException;
+use HappyUtilities\Exceptions\MissingConfigException;
 
 /**
  * Class Di
@@ -16,7 +16,7 @@ use HappyDi\Exceptions\MissingConfigException;
 class Di
 {
     /**
-     * @var \HappyDi\Utility\DataObject|null
+     * @var \HappyUtilities\Data\DataObject|null
      */
     protected $config = null;
 

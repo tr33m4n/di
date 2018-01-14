@@ -7,10 +7,19 @@
             "email": "tr33m4n@googlemail.com"
         }
     ],
-    "require": {},
-    "autoload": {
-        "psr-4": {"HappyDi\\": "src/"}
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "../HappyUtilities"
+        }
+    ],
+    "require": {
+        "danieldoyle/happy-utilities": "dev-master"
     },
     "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {"HappyDi\\": "src/"}
     }
 }

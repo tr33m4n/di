@@ -1,0 +1,43 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "609baf66999b40ef92db2da98a73f395",
+    "packages": [
+        {
+            "name": "danieldoyle/happy-utilities",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "../HappyUtilities",
+                "reference": "08ada448e133e91f9c299c17df58c713520799df"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "HappyUtilities\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Daniel Doyle",
+                    "email": "tr33m4n@googlemail.com"
+                }
+            ],
+            "description": "A very happy utility collection",
+            "time": "2018-01-14T00:51:22+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "danieldoyle/happy-utilities": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

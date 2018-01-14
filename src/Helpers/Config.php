@@ -2,8 +2,7 @@
 
 namespace HappyDi\Helpers;
 
-use HappyDi\Exceptions\MissingConfigException;
-use HappyDi\Utility\DataObject;
+use HappyUtilities\Helpers\Config as UtilityConfig;
 
 /**
  * Class Config
@@ -12,17 +11,12 @@ use HappyDi\Utility\DataObject;
  *
  * @author  Daniel Doyle <dd@amp.co>
  */
-class Config extends DataObject
+class Config extends UtilityConfig
 {
     /**
-     * Config constructor.
+     * Config path override
      */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->setConfig();
-    }
+    const HAPPYUTILITIES_CONFIG_PATH = '/../../config';
 
     /**
      * Get class from config. If the key does not exist, flip the config and check again. This allows to return a class
@@ -50,41 +44,5 @@ class Config extends DataObject
 
         // As the key is in the config, return value (class has no additional arguments to process and exists)
         return $key;
-    }
-
-    /**
-     * Set config
-     *
-     * @author Daniel Doyle <dd@amp.co>
-     * @throws \HappyDi\Exceptions\MissingConfigException
-     * @return void
-     */
-    public function setConfig()
-    {
-        $configFiles = glob($this->getConfigPath() . '*.php');
-
-        if (empty($configFiles)) {
-            throw new MissingConfigException('There are no config files present in the config directory!');
-        }
-
-        // For each config file, merge into data array
-        foreach ($configFiles as $configFilePath) {
-            $this->setAll($this->getAll() + include $configFilePath);
-        }
-    }
-
-    /**
-     * Get config path
-     *
-     * @author Daniel Doyle <dd@amp.co>
-     * @return string
-     */
-    protected function getConfigPath() : string
-    {
-        if (!defined('HAPPYDI_CONFIG_PATH')) {
-            return dirname(__FILE__) . '/../../config/';
-        }
-
-        return rtrim(HAPPYDI_CONFIG_PATH, '/') . '/';
     }
 }
