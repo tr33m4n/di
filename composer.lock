@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "609baf66999b40ef92db2da98a73f395",
+    "content-hash": "68408d6f52b2b4b0ebef83a8ec8b35da",
     "packages": [
         {
             "name": "danieldoyle/happy-utilities",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "../HappyUtilities",
+                "url": "https://tr33dud3@bitbucket.org/tr33dud3/happy-utilities.git",
                 "reference": "793f46dbd794b9fc3863a90346f8506a9015d958"
             },
             "type": "library",
