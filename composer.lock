@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "68408d6f52b2b4b0ebef83a8ec8b35da",
@@ -11,8 +11,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://tr33dud3@bitbucket.org/tr33dud3/happy-utilities.git",
-                "reference": "793f46dbd794b9fc3863a90346f8506a9015d958"
+                "url": "git@bitbucket.org:tr33dud3/happy-utilities.git",
+                "reference": "04bf1fb551ce1d1a6c5712a7d3573e12e4539ec2"
             },
             "type": "library",
             "autoload": {
@@ -27,7 +27,7 @@
                 }
             ],
             "description": "A very happy utility collection",
-            "time": "2018-01-14T13:20:52+00:00"
+            "time": "2018-01-15T22:43:19+00:00"
         }
     ],
     "packages-dev": [],
