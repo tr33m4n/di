@@ -5,7 +5,7 @@ namespace DanielDoyle\HappyDi\EnvironmentConfig;
 use DanielDoyle\HappyDi\Container\ClassParameterResolver;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
 use DanielDoyle\HappyDi\Exception\ReflectionException;
-use HappyUtilities\Helpers\Config;
+use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
 
 /**
  * Class Container
@@ -40,7 +40,7 @@ final class Container
      */
     protected function getClassParameterResolver()
     {
-        return new ClassParameterResolver(new Config('di'));
+        return new ClassParameterResolver(new ConfigProvider('di'));
     }
 
     /**

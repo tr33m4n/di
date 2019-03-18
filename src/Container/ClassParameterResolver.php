@@ -2,7 +2,7 @@
 
 namespace DanielDoyle\HappyDi\Container;
 
-use HappyUtilities\Helpers\Config;
+use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
 
 /**
  * Class ClassParameterResolver
@@ -12,17 +12,17 @@ use HappyUtilities\Helpers\Config;
 class ClassParameterResolver
 {
     /**
-     * @var \HappyUtilities\Helpers\Config
+     * @var \DanielDoyle\HappyUtilities\Helpers\ConfigProvider
      */
     private $configProvider;
 
     /**
      * ClassParameterResolver constructor.
      *
-     * @param \HappyUtilities\Helpers\Config $configProvider
+     * @param \DanielDoyle\HappyUtilities\Helpers\ConfigProvider $configProvider
      */
     public function __construct(
-        Config $configProvider
+        ConfigProvider $configProvider
     ) {
         $this->configProvider = $configProvider;
     }

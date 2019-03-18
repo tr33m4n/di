@@ -7,7 +7,6 @@
             "email": "tr33m4n@googlemail.com"
         }
     ],
-    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "composer",
@@ -15,11 +14,10 @@
         }
     ],
     "require": {
-        "danieldoyle/happy-utilities": "dev-master"
-    },
-    "require-dev": {
+        "danieldoyle/happy-utilities": "^v1.0"
     },
     "autoload": {
         "psr-4": {"DanielDoyle\\HappyDi\\": "src/"}
-    }
+    },
+    "minimum-stability": "dev",
 }
