@@ -20,6 +20,6 @@
     "require-dev": {
     },
     "autoload": {
-        "psr-4": {"HappyDi\\": "src/"}
+        "psr-4": {"DanielDoyle\\HappyDi\\": "src/"}
     }
 }
