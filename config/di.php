@@ -4,14 +4,13 @@
  *
  * \Class\Namespace\Test2,
  * \Class\Namespace\Test3 => [
- *      \Class\Namespace\Test4 => [
- *          \Class\Namespace\Test5
+ *      'param1' => \Class\Namespace\Test4 => [
+ *          'sub_param1' => \Class\Namespace\Test5
  *      ]
  * ],
  * \Class\Namespace\Test => [
- *      'shared' => true,
- *      \Class\Namespace\Test2,
- *      \Class\Namespace\Test3
+ *      'param1' => \Class\Namespace\Test2,
+ *      'param2' => \Class\Namespace\Test3
  */
 return [
 

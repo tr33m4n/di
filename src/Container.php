@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielDoyle\HappyDi\EnvironmentConfig;
+namespace DanielDoyle\HappyDi;
 
 use DanielDoyle\HappyDi\Container\ClassParameterResolver;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
@@ -10,7 +10,7 @@ use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
 /**
  * Class Container
  *
- * @package DanielDoyle\HappyDi\EnvironmentConfig
+ * @package DanielDoyle\HappyDi
  */
 final class Container
 {
