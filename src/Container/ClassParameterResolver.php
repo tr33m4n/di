@@ -30,7 +30,6 @@ class ClassParameterResolver
     /**
      * Resolve class parameters by merging reflected parameters with config
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param \ReflectionClass $reflectionClass
      * @return array
      */

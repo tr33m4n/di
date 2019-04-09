@@ -35,18 +35,16 @@ final class Container
     /**
      * Get class parameter resolver if not present in the constructor
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @return \DanielDoyle\HappyDi\Container\ClassParameterResolver
      */
     protected function getClassParameterResolver()
     {
-        return new ClassParameterResolver(new ConfigProvider('di'));
+        return new ClassParameterResolver(new ConfigProvider('di', [__DIR__ . '/../config']));
     }
 
     /**
      * Create instantiated class
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @throws ReflectionException
      * @param string $className Class name
      * @return object
@@ -76,7 +74,6 @@ final class Container
     /**
      * Get class from DI
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @throws MissingClassException
      * @param string $className Class name to get
      * @return object

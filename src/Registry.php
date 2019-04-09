@@ -24,7 +24,6 @@ class Registry
     /**
      * Whether key has been set
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param mixed $key Key to check
      * @return bool
      */
@@ -36,12 +35,11 @@ class Registry
     /**
      * Set registry key
      *
-     * @author Daniel Doyle <dd@amp.co>
-     * @param mixed $key   Key to set
-     * @param mixed $value Value to set
+     * @param string $key    Key to set
+     * @param mixed  $value  Value to set
      * @throws \DanielDoyle\HappyDi\Exception\RegistryException
      */
-    public static function set($key, $value)
+    public static function set(string $key, $value)
     {
         if (self::has($key)) {
             throw new RegistryException('Registry key already exists!');
@@ -53,7 +51,6 @@ class Registry
     /**
      * Get registry value by key
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param mixed $key Key to get
      * @return mixed|null
      */
@@ -65,7 +62,6 @@ class Registry
     /**
      * Set container
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @param Container $container
      */
     public static function setContainer(Container $container)
@@ -76,7 +72,6 @@ class Registry
     /**
      * Get container
      *
-     * @author Daniel Doyle <dd@amp.co>
      * @throws \DanielDoyle\HappyDi\Exception\RegistryException
      * @return Container
      */
