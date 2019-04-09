@@ -39,6 +39,18 @@ final class Container
     }
 
     /**
+     * Check if class parameter can be instantiated
+     *
+     * @param mixed $classParameter Class parameter
+     * @return bool
+     */
+    protected function canClassParameterBeInstantiated($classParameter) : bool
+    {
+        return is_string($classParameter)
+            && (class_exists($classParameter) || interface_exists($classParameter, false));
+    }
+
+    /**
      * Create instantiated class
      *
      * @throws ReflectionException
@@ -63,7 +75,7 @@ final class Container
 
         // Return new instance with resolved arguments
         return $reflectionClass->newInstanceArgs(array_map(function ($classParameter) {
-            return is_string($classParameter) && class_exists($classParameter)
+            return $this->canClassParameterBeInstantiated($classParameter)
                 ? $this->get($classParameter)
                 : $classParameter;
         }, $classParameters));
@@ -79,7 +91,7 @@ final class Container
     public function get(string $className)
     {
         // Make sure class exists
-        if (!class_exists($className)) {
+        if (!class_exists($className) && !interface_exists($className, false)) {
             throw new MissingClassException(sprintf('%s does not exist!', $className));
         }
 
