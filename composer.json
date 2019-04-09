@@ -19,5 +19,7 @@
     "autoload": {
         "psr-4": {"DanielDoyle\\HappyDi\\": "src/"}
     },
-    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
 }
