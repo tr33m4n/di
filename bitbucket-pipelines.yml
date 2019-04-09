@@ -15,4 +15,4 @@ pipelines:
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer config --global --auth http-basic.satis.daniel-doyle.co.uk tr33m4n k3nrQkK3T2qkHWZR6gbiJsYYzYjnjv
           - composer install
-          - make tests
+          - make test
