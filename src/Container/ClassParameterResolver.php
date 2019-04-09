@@ -12,6 +12,11 @@ use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
 class ClassParameterResolver
 {
     /**
+     * Parameters config key
+     */
+    const CONFIG_KEY = 'parameters';
+
+    /**
      * @var \DanielDoyle\HappyUtilities\Helpers\ConfigProvider
      */
     private $configProvider;
@@ -42,7 +47,8 @@ class ClassParameterResolver
             return $resolvedParameters;
         }
 
-        $classConfig = $this->configProvider->get($reflectionClass->getName()) ?: [];
+        $parametersConfig = $this->configProvider->get(self::CONFIG_KEY);
+        $classConfig = isset($parametersConfig[$reflectionClass->getName()]) ?: [];
         $classParameters = $classConstructor->getParameters();
 
         foreach ($classParameters as $classParameter) {

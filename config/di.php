@@ -13,5 +13,6 @@
  *      'param2' => \Class\Namespace\Test3
  */
 return [
-
+    \DanielDoyle\HappyDi\Container\PreferenceResolver::CONFIG_KEY => [],
+    \DanielDoyle\HappyDi\Container\ClassParameterResolver::CONFIG_KEY => []
 ];

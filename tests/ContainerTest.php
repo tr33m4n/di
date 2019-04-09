@@ -5,12 +5,33 @@ namespace DanielDoyle\HappyDi;
 use PHPUnit\Framework\TestCase;
 use DanielDoyle\HappyDi\Container;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
+use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
 
 /**
  * ContainerTest class
  */
 final class ContainerTest extends TestCase
 {
+    /**
+     * @var \DanielDoyle\HappyDi\Container
+     */
+    private $container;
+
+    /**
+     * Setup test
+     *
+     * @return void
+     */
+    public function setUp() : void
+    {
+        $diConfig = new ConfigProvider('di', [__DIR__ . '/../config']);
+
+        $this->container = new Container(
+            new Container\ClassParameterResolver($diConfig),
+            new Container\PreferenceResolver($diConfig)
+        );
+    }
+
     /**
      * Assert that the container returns requested class
      * 
@@ -22,7 +43,7 @@ final class ContainerTest extends TestCase
      */
     public function assertContainerReturnsRequestedClass($input, $expected)
     {
-        $this->assertEquals((new Container())->get($input), $expected);
+        $this->assertEquals($this->container->get($input), $expected);
     }
 
     /**
@@ -36,7 +57,7 @@ final class ContainerTest extends TestCase
     public function assertContainerThrowsError($input)
     {
         $this->expectException(MissingClassException::class);
-        (new Container())->get($input);
+        $this->container->get($input);
     }
 
     /**

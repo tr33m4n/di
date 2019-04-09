@@ -3,9 +3,9 @@
 namespace DanielDoyle\HappyDi;
 
 use DanielDoyle\HappyDi\Container\ClassParameterResolver;
+use DanielDoyle\HappyDi\Container\PreferenceResolver;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
 use DanielDoyle\HappyDi\Exception\ReflectionException;
-use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
 
 /**
  * Class Container
@@ -20,26 +20,22 @@ final class Container
     private $classParameterResolver;
 
     /**
+     * @var \DanielDoyle\HappyDi\Container\PreferenceResolver
+     */
+    private $preferenceResolver;
+
+    /**
      * Container constructor.
      *
      * @param \DanielDoyle\HappyDi\Container\ClassParameterResolver $classParameterResolver
+     * @param \DanielDoyle\HappyDi\Container\PreferenceResolver     $preferenceResolver
      */
     public function __construct(
-        ClassParameterResolver $classParameterResolver = null
+        ClassParameterResolver $classParameterResolver,
+        PreferenceResolver $preferenceResolver
     ) {
-        $this->classParameterResolver = !$classParameterResolver
-            ? $this->getClassParameterResolver()
-            : $classParameterResolver;
-    }
-
-    /**
-     * Get class parameter resolver if not present in the constructor
-     *
-     * @return \DanielDoyle\HappyDi\Container\ClassParameterResolver
-     */
-    protected function getClassParameterResolver()
-    {
-        return new ClassParameterResolver(new ConfigProvider('di', [__DIR__ . '/../config']));
+        $this->classParameterResolver = $classParameterResolver;
+        $this->preferenceResolver = $preferenceResolver;
     }
 
     /**
@@ -51,6 +47,8 @@ final class Container
      */
     protected function createInstantiatedClass(string $className)
     {
+        $className = $this->preferenceResolver->resolve($className);
+
         // Ensure class is instantiable
         $reflectionClass = new \ReflectionClass($className);
         if (!$reflectionClass->isInstantiable()) {
