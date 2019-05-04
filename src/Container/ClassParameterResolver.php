@@ -2,7 +2,7 @@
 
 namespace DanielDoyle\HappyDi\Container;
 
-use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
+use DanielDoyle\HappyUtilities\Config\ConfigProvider;
 
 /**
  * Class ClassParameterResolver
@@ -17,19 +17,19 @@ class ClassParameterResolver
     const CONFIG_KEY = 'parameters';
 
     /**
-     * @var \DanielDoyle\HappyUtilities\Helpers\ConfigProvider
+     * @var \DanielDoyle\HappyUtilities\Config\ConfigItem
      */
-    private $configProvider;
+    private $diConfig;
 
     /**
      * ClassParameterResolver constructor.
      *
-     * @param \DanielDoyle\HappyUtilities\Helpers\ConfigProvider $configProvider
+     * @param \DanielDoyle\HappyUtilities\Config\ConfigProvider $configProvider
      */
     public function __construct(
         ConfigProvider $configProvider
     ) {
-        $this->configProvider = $configProvider;
+        $this->diConfig = $configProvider->get('di');
     }
 
     /**
@@ -47,7 +47,7 @@ class ClassParameterResolver
             return $resolvedParameters;
         }
 
-        $parametersConfig = $this->configProvider->get(self::CONFIG_KEY);
+        $parametersConfig = $this->diConfig->get(self::CONFIG_KEY);
         $classConfig = isset($parametersConfig[$reflectionClass->getName()]) ?: [];
         $classParameters = $classConstructor->getParameters();
 

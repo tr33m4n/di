@@ -5,7 +5,7 @@ namespace DanielDoyle\HappyDi;
 use PHPUnit\Framework\TestCase;
 use DanielDoyle\HappyDi\Container;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
-use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
+use DanielDoyle\HappyUtilities\Config\ConfigProvider;
 
 /**
  * ContainerTest class
@@ -24,7 +24,7 @@ final class ContainerTest extends TestCase
      */
     public function setUp() : void
     {
-        $diConfig = new ConfigProvider('di', [__DIR__ . '/../config']);
+        $diConfig = new ConfigProvider([__DIR__ . '/../config']);
 
         $this->container = new Container(
             new Container\ClassParameterResolver($diConfig),
@@ -68,7 +68,7 @@ final class ContainerTest extends TestCase
     public function validDataProvider() : array
     {
         return [
-            ['\DanielDoyle\HappyDi\Registry', new \DanielDoyle\HappyDi\Registry()]
+            ['\DanielDoyle\HappyUtilities\Registry', new \DanielDoyle\HappyUtilities\Registry()]
         ];
     }
 

@@ -2,7 +2,7 @@
 
 namespace DanielDoyle\HappyDi\Container;
 
-use DanielDoyle\HappyUtilities\Helpers\ConfigProvider;
+use DanielDoyle\HappyUtilities\Config\ConfigProvider;
 
 /**
  * Class PreferenceResolver
@@ -17,19 +17,19 @@ class PreferenceResolver
     const CONFIG_KEY = 'preferences';
 
     /**
-     * @var \DanielDoyle\HappyUtilities\Helpers\ConfigProvider
+     * @var \DanielDoyle\HappyUtilities\Config\ConfigItem
      */
-    private $configProvider;
+    private $diConfig;
 
     /**
      * ClassParameterResolver constructor.
      *
-     * @param \DanielDoyle\HappyUtilities\Helpers\ConfigProvider $configProvider
+     * @param \DanielDoyle\HappyUtilities\Config\ConfigProvider $configProvider
      */
     public function __construct(
         ConfigProvider $configProvider
     ) {
-        $this->configProvider = $configProvider;
+        $this->diConfig = $configProvider->get('di');
     }
 
     /**
@@ -40,7 +40,7 @@ class PreferenceResolver
      */
     public function resolve(string $className) : string
     {
-        $preferencesConfig = $this->configProvider->get(self::CONFIG_KEY);
+        $preferencesConfig = $this->diConfig->get(self::CONFIG_KEY);
         if (array_key_exists($className, $preferencesConfig) && !empty($preferencesConfig[$className])) {
             return $preferencesConfig[$className];
         }
