@@ -1,5 +1,8 @@
-list: # Lists all available commands, the default command when running `make` with no arguments
-	@grep -v -e "^\t" Makefile | grep -Ev '(HEADLESS|ENV)' | grep . | awk -F":.+?#" '{ print $$1 " #" $$2 }' | column -t -s '#'
+.PHONY: help
+.DEFAULT_GOAL := help
 
-test: # Run tests
+help: ## Lists all available commands, the default command when running `make` with no arguments
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+test: ## Run tests
 	./vendor/bin/phpunit --bootstrap vendor/autoload.php tests
