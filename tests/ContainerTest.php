@@ -3,9 +3,9 @@
 namespace DanielDoyle\HappyDi;
 
 use PHPUnit\Framework\TestCase;
-use DanielDoyle\HappyDi\Container;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
 use DanielDoyle\HappyUtilities\Config\ConfigProvider;
+use DanielDoyle\HappyUtilities\Registry;
 
 /**
  * ContainerTest class
@@ -37,6 +37,8 @@ final class ContainerTest extends TestCase
      * 
      * @test
      * @dataProvider validDataProvider
+     * @throws \ReflectionException
+     * @throws MissingClassException
      * @param string $input
      * @param object $expected
      * @return void
@@ -51,6 +53,8 @@ final class ContainerTest extends TestCase
      * 
      * @test
      * @dataProvider invalidDataProvider
+     * @throws \ReflectionException
+     * @throws MissingClassException
      * @param string $input
      * @return void
      */
@@ -68,7 +72,7 @@ final class ContainerTest extends TestCase
     public function validDataProvider() : array
     {
         return [
-            ['\DanielDoyle\HappyUtilities\Registry', new \DanielDoyle\HappyUtilities\Registry()]
+            ['\DanielDoyle\HappyUtilities\Registry', new Registry()]
         ];
     }
 

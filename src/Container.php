@@ -5,7 +5,8 @@ namespace DanielDoyle\HappyDi;
 use DanielDoyle\HappyDi\Container\ClassParameterResolver;
 use DanielDoyle\HappyDi\Container\PreferenceResolver;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
-use DanielDoyle\HappyDi\Exception\ReflectionException;
+use ReflectionException;
+use ReflectionClass;
 
 /**
  * Class Container
@@ -53,7 +54,7 @@ final class Container
     /**
      * Create instantiated class
      *
-     * @throws ReflectionException
+     * @throws \ReflectionException
      * @param string $className Class name
      * @return object
      */
@@ -62,7 +63,7 @@ final class Container
         $className = $this->preferenceResolver->resolve($className);
 
         // Ensure class is instantiable
-        $reflectionClass = new \ReflectionClass($className);
+        $reflectionClass = new ReflectionClass($className);
         if (!$reflectionClass->isInstantiable()) {
             throw new ReflectionException(sprintf('%s is not instantiable!', $className));
         }
@@ -84,6 +85,7 @@ final class Container
     /**
      * Get class from DI
      *
+     * @throws \ReflectionException
      * @throws MissingClassException
      * @param string $className Class name to get
      * @return object

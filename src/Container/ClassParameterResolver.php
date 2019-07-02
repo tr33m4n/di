@@ -35,6 +35,7 @@ class ClassParameterResolver
     /**
      * Resolve class parameters by merging reflected parameters with config
      *
+     * @throws \ReflectionException
      * @param \ReflectionClass $reflectionClass
      * @return array
      */
