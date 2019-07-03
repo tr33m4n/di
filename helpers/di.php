@@ -2,13 +2,13 @@
 
 use DanielDoyle\HappyDi\Container;
 use DanielDoyle\HappyUtilities\Registry;
-use DanielDoyle\HappyUtilities\Config\ConfigProvider;
 
 /**
  * Helper function for easily accessing the DI container
  *
+ * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
  * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
- * @param array $additionalConfigPaths Additional paths
+ * @param array $additionalConfigPaths Additional config paths
  * @return \DanielDoyle\HappyDi\Container|mixed|null
  */
 function di(array $additionalConfigPaths = [])
@@ -17,11 +17,11 @@ function di(array $additionalConfigPaths = [])
         return $registeredContainer;
     }
 
-    $diConfig = new ConfigProvider($additionalConfigPaths);
+    $config = config($additionalConfigPaths);
     $container = new Container(
-        new Container\ClassParameterResolver($diConfig),
-        new Container\PreferenceResolver($diConfig),
-        new Container\SharedResolver($diConfig)
+        new Container\ClassParameterResolver($config),
+        new Container\PreferenceResolver($config),
+        new Container\SharedResolver($config)
     );
 
     Registry::set('container', $container);
