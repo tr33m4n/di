@@ -8,20 +8,18 @@ use DanielDoyle\HappyUtilities\Registry;
  *
  * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
  * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
- * @param array $additionalConfigPaths Additional config paths
  * @return \DanielDoyle\HappyDi\Container|mixed|null
  */
-function di(array $additionalConfigPaths = [])
+function di()
 {
     if ($registeredContainer = Registry::get('container')) {
         return $registeredContainer;
     }
 
-    $config = config($additionalConfigPaths);
     $container = new Container(
-        new Container\ClassParameterResolver($config),
-        new Container\PreferenceResolver($config),
-        new Container\SharedResolver($config)
+        new Container\ClassParameterResolver(),
+        new Container\PreferenceResolver(),
+        new Container\SharedResolver()
     );
 
     Registry::set('container', $container);

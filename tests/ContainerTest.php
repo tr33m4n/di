@@ -5,6 +5,7 @@ namespace DanielDoyle\HappyDi;
 use PHPUnit\Framework\TestCase;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
 use DanielDoyle\HappyUtilities\Exception\RegistryException;
+use DanielDoyle\HappyUtilities\Exception\MissingConfigException;
 use DanielDoyle\HappyUtilities\Registry;
 
 /**
@@ -13,19 +14,13 @@ use DanielDoyle\HappyUtilities\Registry;
 final class ContainerTest extends TestCase
 {
     /**
-     * @var \DanielDoyle\HappyDi\Container
-     */
-    private $container;
-
-    /**
      * Setup test
-     *
-     * @throws RegistryException
-     * @return void
      */
     public function setUp() : void
     {
-        $this->container = di([__DIR__ . '/../config']);
+        if (!defined('HAPPYUTILITIES_CONFIG_PATH')) {
+            define('HAPPYUTILITIES_CONFIG_PATH', __DIR__ . '/../config');
+        }
     }
 
     /**
@@ -35,13 +30,15 @@ final class ContainerTest extends TestCase
      * @dataProvider validDataProvider
      * @throws \ReflectionException
      * @throws MissingClassException
+     * @throws RegistryException
+     * @throws MissingConfigException
      * @param string $input
      * @param object $expected
      * @return void
      */
     public function assertContainerReturnsRequestedClass($input, $expected)
     {
-        $this->assertEquals($this->container->get($input), $expected);
+        $this->assertEquals(di()->get($input), $expected);
     }
 
     /**
@@ -51,13 +48,15 @@ final class ContainerTest extends TestCase
      * @dataProvider invalidDataProvider
      * @throws \ReflectionException
      * @throws MissingClassException
+     * @throws RegistryException
+     * @throws MissingConfigException
      * @param string $input
      * @return void
      */
     public function assertContainerThrowsError($input)
     {
         $this->expectException(MissingClassException::class);
-        $this->container->get($input);
+        di()->get($input);
     }
 
     /**

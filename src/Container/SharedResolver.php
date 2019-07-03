@@ -2,8 +2,6 @@
 
 namespace DanielDoyle\HappyDi\Container;
 
-use DanielDoyle\HappyUtilities\Config\ConfigProvider;
-
 /**
  * Class SharedResolver
  *
@@ -22,14 +20,14 @@ class SharedResolver
     private $diConfig;
 
     /**
-     * ClassParameterResolver constructor.
+     * SharedResolver constructor.
      *
-     * @param \DanielDoyle\HappyUtilities\Config\ConfigProvider $configProvider
+     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
+     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
      */
-    public function __construct(
-        ConfigProvider $configProvider
-    ) {
-        $this->diConfig = $configProvider->get('di');
+    public function __construct()
+    {
+        $this->diConfig = config()->get('di');
     }
 
     /**
