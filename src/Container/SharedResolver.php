@@ -36,9 +36,9 @@ class SharedResolver
      * Resolve shared
      *
      * @param string $className Class/interface name
-     * @return string
+     * @return bool
      */
-    public function resolve(string $className) : string
+    public function resolve(string $className) : bool
     {
         $sharedConfig = $this->diConfig->get(self::CONFIG_KEY);
         return !array_key_exists($className, $sharedConfig)

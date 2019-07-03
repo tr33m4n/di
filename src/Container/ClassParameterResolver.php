@@ -49,7 +49,7 @@ class ClassParameterResolver
         }
 
         $parametersConfig = $this->diConfig->get(self::CONFIG_KEY);
-        $classConfig = isset($parametersConfig[$reflectionClass->getName()]) ?: [];
+        $classConfig = $parametersConfig[$reflectionClass->getName()] ?? [];
         $classParameters = $classConstructor->getParameters();
 
         foreach ($classParameters as $classParameter) {
