@@ -4,6 +4,7 @@ namespace DanielDoyle\HappyDi;
 
 use DanielDoyle\HappyDi\Container\ClassParameterResolver;
 use DanielDoyle\HappyDi\Container\PreferenceResolver;
+use DanielDoyle\HappyDi\Container\SharedResolver;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
 use ReflectionException;
 use ReflectionClass;
@@ -26,17 +27,30 @@ final class Container
     private $preferenceResolver;
 
     /**
+     * @var \DanielDoyle\HappyDi\Container\SharedResolver
+     */
+    private $sharedResolver;
+
+    /**
+     * @var object[]
+     */
+    private $sharedInstantiatedClasses = [];
+
+    /**
      * Container constructor.
      *
      * @param \DanielDoyle\HappyDi\Container\ClassParameterResolver $classParameterResolver
      * @param \DanielDoyle\HappyDi\Container\PreferenceResolver     $preferenceResolver
+     * @param \DanielDoyle\HappyDi\Container\SharedResolver         $sharedResolver
      */
     public function __construct(
         ClassParameterResolver $classParameterResolver,
-        PreferenceResolver $preferenceResolver
+        PreferenceResolver $preferenceResolver,
+        SharedResolver $sharedResolver
     ) {
         $this->classParameterResolver = $classParameterResolver;
         $this->preferenceResolver = $preferenceResolver;
+        $this->sharedResolver = $sharedResolver;
     }
 
     /**
@@ -97,7 +111,20 @@ final class Container
             throw new MissingClassException(sprintf('%s does not exist!', $className));
         }
 
+        // Return shared class if already instantiated
+        if (array_key_exists($className, $this->sharedInstantiatedClasses)) {
+            return $this->sharedInstantiatedClasses[$className];
+        }
+
+        // Should the class be set as shared
+        $isSetShared = $this->sharedResolver->resolve($className);
         // Instantiate class from DI
-        return $this->createInstantiatedClass($className);
+        $instantiatedClass = $this->createInstantiatedClass($className);
+
+        if ($isSetShared) {
+            return $this->sharedInstantiatedClasses[$className] = $instantiatedClass;
+        }
+
+        return $instantiatedClass;
     }
 }

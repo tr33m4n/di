@@ -28,7 +28,8 @@ final class ContainerTest extends TestCase
 
         $this->container = new Container(
             new Container\ClassParameterResolver($diConfig),
-            new Container\PreferenceResolver($diConfig)
+            new Container\PreferenceResolver($diConfig),
+            new Container\SharedResolver($diConfig)
         );
     }
 

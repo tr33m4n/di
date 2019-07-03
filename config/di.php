@@ -1,7 +1,6 @@
 <?php
 
-use DanielDoyle\HappyDi\Container\PreferenceResolver;
-use DanielDoyle\HappyDi\Container\ClassParameterResolver;
+use DanielDoyle\HappyDi\Container;
 
 /**
  * Constructor args should be defined like the following:
@@ -17,6 +16,7 @@ use DanielDoyle\HappyDi\Container\ClassParameterResolver;
  *      'param2' => \Class\Namespace\Test3
  */
 return [
-    PreferenceResolver::CONFIG_KEY => [],
-    ClassParameterResolver::CONFIG_KEY => []
+    Container\PreferenceResolver::CONFIG_KEY => [],
+    Container\ClassParameterResolver::CONFIG_KEY => [],
+    Container\SharedResolver::CONFIG_KEY => []
 ];
