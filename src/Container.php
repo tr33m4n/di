@@ -69,6 +69,8 @@ final class Container
      * Create instantiated class
      *
      * @throws \ReflectionException
+     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
+     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
      * @param string $className Class name
      * @return object
      */
@@ -101,6 +103,8 @@ final class Container
      *
      * @throws \ReflectionException
      * @throws MissingClassException
+     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
+     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
      * @param string $className Class name to get
      * @return object
      */

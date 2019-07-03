@@ -15,25 +15,11 @@ class ClassParameterResolver
     const CONFIG_KEY = 'parameters';
 
     /**
-     * @var \DanielDoyle\HappyUtilities\Config\ConfigItem
-     */
-    private $diConfig;
-
-    /**
-     * ClassParameterResolver constructor.
-     *
-     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
-     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
-     */
-    public function __construct()
-    {
-        $this->diConfig = config()->get('di');
-    }
-
-    /**
      * Resolve class parameters by merging reflected parameters with config
      *
      * @throws \ReflectionException
+     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
+     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
      * @param \ReflectionClass $reflectionClass
      * @return array
      */
@@ -46,7 +32,7 @@ class ClassParameterResolver
             return $resolvedParameters;
         }
 
-        $parametersConfig = $this->diConfig->get(self::CONFIG_KEY);
+        $parametersConfig = config('di')->get(self::CONFIG_KEY);
         $classConfig = $parametersConfig[$reflectionClass->getName()] ?? [];
         $classParameters = $classConstructor->getParameters();
 

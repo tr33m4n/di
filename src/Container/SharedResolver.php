@@ -15,30 +15,16 @@ class SharedResolver
     const CONFIG_KEY = 'shared';
 
     /**
-     * @var \DanielDoyle\HappyUtilities\Config\ConfigItem
-     */
-    private $diConfig;
-
-    /**
-     * SharedResolver constructor.
+     * Resolve shared
      *
      * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
      * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
-     */
-    public function __construct()
-    {
-        $this->diConfig = config()->get('di');
-    }
-
-    /**
-     * Resolve shared
-     *
      * @param string $className Class/interface name
      * @return bool
      */
     public function resolve(string $className) : bool
     {
-        $sharedConfig = $this->diConfig->get(self::CONFIG_KEY);
+        $sharedConfig = config('di')->get(self::CONFIG_KEY);
         return !array_key_exists($className, $sharedConfig)
             || (array_key_exists($className, $sharedConfig) && $sharedConfig[$className]);
     }

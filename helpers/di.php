@@ -6,7 +6,6 @@ use DanielDoyle\HappyUtilities\Registry;
 /**
  * Helper function for easily accessing the DI container
  *
- * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
  * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
  * @return \DanielDoyle\HappyDi\Container|mixed|null
  */

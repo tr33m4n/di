@@ -8,17 +8,17 @@
     "packages": [
         {
             "name": "danieldoyle/happy-utilities",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:tr33dud3/happy-utilities.git",
-                "reference": "17ce79a07fcb630b61798a8d3480bbb81a674c97"
+                "reference": "ee7f0a9cdfa466281fa4c20d5aad6ded940bfbb2"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://satis.daniel-doyle.co.uk/dist/danieldoyle/happy-utilities/danieldoyle-happy-utilities-v1.0.3-0abda4.tar",
-                "reference": "17ce79a07fcb630b61798a8d3480bbb81a674c97",
-                "shasum": "ea57b97ee39495ebe57ef9e45effb6913b35e9aa"
+                "url": "https://satis.daniel-doyle.co.uk/dist/danieldoyle/happy-utilities/danieldoyle-happy-utilities-v1.0.4-4583a3.tar",
+                "reference": "ee7f0a9cdfa466281fa4c20d5aad6ded940bfbb2",
+                "shasum": "dd7baf11f1523abb003add2a3ffbc1bfe2580035"
             },
             "require-dev": {
                 "phpstan/phpstan": "^0.11.8",
@@ -40,7 +40,7 @@
                 }
             ],
             "description": "A very happy utility collection",
-            "time": "2019-07-03T13:11:20+00:00"
+            "time": "2019-07-03T14:39:56+00:00"
         }
     ],
     "packages-dev": [
