@@ -4,7 +4,7 @@ namespace DanielDoyle\HappyDi;
 
 use PHPUnit\Framework\TestCase;
 use DanielDoyle\HappyDi\Exception\MissingClassException;
-use DanielDoyle\HappyUtilities\Config\ConfigProvider;
+use DanielDoyle\HappyUtilities\Exception\RegistryException;
 use DanielDoyle\HappyUtilities\Registry;
 
 /**
@@ -20,17 +20,12 @@ final class ContainerTest extends TestCase
     /**
      * Setup test
      *
+     * @throws RegistryException
      * @return void
      */
     public function setUp() : void
     {
-        $diConfig = new ConfigProvider([__DIR__ . '/../config']);
-
-        $this->container = new Container(
-            new Container\ClassParameterResolver($diConfig),
-            new Container\PreferenceResolver($diConfig),
-            new Container\SharedResolver($diConfig)
-        );
+        $this->container = di([__DIR__ . '/../config']);
     }
 
     /**

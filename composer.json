@@ -17,7 +17,12 @@
         "danieldoyle/happy-utilities": "^v1.0"
     },
     "autoload": {
-        "psr-4": {"DanielDoyle\\HappyDi\\": "src/"}
+        "files": [
+            "helpers/di.php"
+        ],
+        "psr-4": {
+            "DanielDoyle\\HappyDi\\": "src/"
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "^8",
