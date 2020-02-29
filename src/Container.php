@@ -127,6 +127,6 @@ final class Container
             return $this->sharedInstantiatedClasses[$className] = $instantiatedClass;
         }
 
-        return $this->sharedInstantiatedClasses[$className] = $this->createInstantiatedClass($className);
+        return $instantiatedClass;
     }
 }

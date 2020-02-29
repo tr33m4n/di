@@ -17,6 +17,11 @@
             "tr33m4n\\Di\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "tr33m4n\\Di\\Tests\\": "tests/src/"
+        }
+    },
     "require": {
         "php": "^7.2",
         "tr33m4n/utilities": "^1.2"
