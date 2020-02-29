@@ -23,6 +23,6 @@ class PreferenceResolver
      */
     public function resolve(string $className) : string
     {
-        return config('di')->get(self::CONFIG_KEY)->get($className) ?? $className;
+        return config('di')->get(self::CONFIG_KEY)->get($className) ?: $className;
     }
 }

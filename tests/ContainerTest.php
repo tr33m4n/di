@@ -15,11 +15,13 @@ final class ContainerTest extends TestCase
 {
     /**
      * Setup test
+     *
+     * @return void
      */
     public function setUp() : void
     {
-        if (!defined('HAPPYUTILITIES_CONFIG_PATH')) {
-            define('HAPPYUTILITIES_CONFIG_PATH', __DIR__ . '/../config');
+        if (!defined('ROOT_CONFIG_PATH')) {
+            define('ROOT_CONFIG_PATH', __DIR__ . '/../config');
         }
     }
 
@@ -31,12 +33,11 @@ final class ContainerTest extends TestCase
      * @throws \ReflectionException
      * @throws MissingClassException
      * @throws RegistryException
-     * @throws MissingConfigException
      * @param string $input
      * @param object $expected
      * @return void
      */
-    public function assertContainerReturnsRequestedClass($input, $expected)
+    public function assertContainerReturnsRequestedClass($input, $expected) : void
     {
         $this->assertEquals(di()->get($input), $expected);
     }
@@ -49,11 +50,10 @@ final class ContainerTest extends TestCase
      * @throws \ReflectionException
      * @throws MissingClassException
      * @throws RegistryException
-     * @throws MissingConfigException
      * @param string $input
      * @return void
      */
-    public function assertContainerThrowsError($input)
+    public function assertContainerThrowsError($input) : void
     {
         $this->expectException(MissingClassException::class);
         di()->get($input);
@@ -67,7 +67,7 @@ final class ContainerTest extends TestCase
     public function validDataProvider() : array
     {
         return [
-            ['\tr33m4n\Utilities\Registry', new Registry()]
+            [Registry::class, new Registry()]
         ];
     }
 

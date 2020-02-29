@@ -48,7 +48,7 @@ class ClassParameterResolver
      * Convert parameters to values
      *
      * @param \ReflectionParameter[] $parameters
-     * @return mixed
+     * @return array
      */
     private function convertParametersToValues(array $parameters) : array
     {
