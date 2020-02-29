@@ -1,11 +1,11 @@
 <?php
 
-namespace DanielDoyle\HappyDi\Container;
+namespace tr33m4n\HappyDi\Container;
 
 /**
  * Class SharedResolver
  *
- * @package DanielDoyle\HappyDi\Container
+ * @package tr33m4n\HappyDi\Container
  */
 class SharedResolver
 {
@@ -17,8 +17,8 @@ class SharedResolver
     /**
      * Resolve shared
      *
-     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
-     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
+     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
      * @param string $className Class/interface name
      * @return bool
      */

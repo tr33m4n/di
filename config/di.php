@@ -1,6 +1,6 @@
 <?php
 
-use DanielDoyle\HappyDi\Container;
+use tr33m4n\HappyDi\Container;
 
 /**
  * Constructor args should be defined like the following:

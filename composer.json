@@ -1,5 +1,5 @@
 {
-    "name": "danieldoyle/happy-di",
+    "name": "tr33m4n/happy-di",
     "description": "A very happy DI",
     "authors": [
         {
@@ -7,21 +7,15 @@
             "email": "tr33m4n@googlemail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://satis.daniel-doyle.co.uk"
-        }
-    ],
     "require": {
-        "danieldoyle/happy-utilities": "^v1.0"
+        "tr33m4n/happy-utilities": "^v1.0"
     },
     "autoload": {
         "files": [
             "helpers/di.php"
         ],
         "psr-4": {
-            "DanielDoyle\\HappyDi\\": "src/"
+            "tr33m4n\\HappyDi\\": "src/"
         }
     },
     "require-dev": {

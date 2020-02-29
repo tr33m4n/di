@@ -1,11 +1,11 @@
 <?php
 
-namespace DanielDoyle\HappyDi\Exception;
+namespace tr33m4n\HappyDi\Exception;
 
 /**
  * Class MissingClassException
  *
- * @package DanielDoyle\HappyDi\Exception
+ * @package tr33m4n\HappyDi\Exception
  */
 class MissingClassException extends \Exception
 {

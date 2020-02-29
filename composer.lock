@@ -30,7 +30,7 @@
                     "helpers/config.php"
                 ],
                 "psr-4": {
-                    "DanielDoyle\\HappyUtilities\\": "src/"
+                    "tr33m4n\\HappyUtilities\\": "src/"
                 }
             },
             "authors": [

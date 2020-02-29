@@ -1,11 +1,11 @@
 <?php
 
-namespace DanielDoyle\HappyDi\Container;
+namespace tr33m4n\HappyDi\Container;
 
 /**
  * Class ClassParameterResolver
  *
- * @package DanielDoyle\HappyDi\Container
+ * @package tr33m4n\HappyDi\Container
  */
 class ClassParameterResolver
 {
@@ -18,8 +18,8 @@ class ClassParameterResolver
      * Resolve class parameters by merging reflected parameters with config
      *
      * @throws \ReflectionException
-     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
-     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
+     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
      * @param \ReflectionClass $reflectionClass
      * @return array
      */

@@ -1,33 +1,33 @@
 <?php
 
-namespace DanielDoyle\HappyDi;
+namespace tr33m4n\HappyDi;
 
-use DanielDoyle\HappyDi\Container\ClassParameterResolver;
-use DanielDoyle\HappyDi\Container\PreferenceResolver;
-use DanielDoyle\HappyDi\Container\SharedResolver;
-use DanielDoyle\HappyDi\Exception\MissingClassException;
+use tr33m4n\HappyDi\Container\ClassParameterResolver;
+use tr33m4n\HappyDi\Container\PreferenceResolver;
+use tr33m4n\HappyDi\Container\SharedResolver;
+use tr33m4n\HappyDi\Exception\MissingClassException;
 use ReflectionException;
 use ReflectionClass;
 
 /**
  * Class Container
  *
- * @package DanielDoyle\HappyDi
+ * @package tr33m4n\HappyDi
  */
 final class Container
 {
     /**
-     * @var \DanielDoyle\HappyDi\Container\ClassParameterResolver
+     * @var \tr33m4n\HappyDi\Container\ClassParameterResolver
      */
     private $classParameterResolver;
 
     /**
-     * @var \DanielDoyle\HappyDi\Container\PreferenceResolver
+     * @var \tr33m4n\HappyDi\Container\PreferenceResolver
      */
     private $preferenceResolver;
 
     /**
-     * @var \DanielDoyle\HappyDi\Container\SharedResolver
+     * @var \tr33m4n\HappyDi\Container\SharedResolver
      */
     private $sharedResolver;
 
@@ -39,9 +39,9 @@ final class Container
     /**
      * Container constructor.
      *
-     * @param \DanielDoyle\HappyDi\Container\ClassParameterResolver $classParameterResolver
-     * @param \DanielDoyle\HappyDi\Container\PreferenceResolver     $preferenceResolver
-     * @param \DanielDoyle\HappyDi\Container\SharedResolver         $sharedResolver
+     * @param \tr33m4n\HappyDi\Container\ClassParameterResolver $classParameterResolver
+     * @param \tr33m4n\HappyDi\Container\PreferenceResolver     $preferenceResolver
+     * @param \tr33m4n\HappyDi\Container\SharedResolver         $sharedResolver
      */
     public function __construct(
         ClassParameterResolver $classParameterResolver,
@@ -59,7 +59,7 @@ final class Container
      * @param mixed $classParameter Class parameter
      * @return bool
      */
-    protected function canClassParameterBeInstantiated($classParameter) : bool
+    private function canClassParameterBeInstantiated($classParameter) : bool
     {
         return is_string($classParameter)
             && (class_exists($classParameter) || interface_exists($classParameter, false));
@@ -69,12 +69,12 @@ final class Container
      * Create instantiated class
      *
      * @throws \ReflectionException
-     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
-     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
+     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
      * @param string $className Class name
      * @return object
      */
-    protected function createInstantiatedClass(string $className)
+    private function createInstantiatedClass(string $className)
     {
         $className = $this->preferenceResolver->resolve($className);
 
@@ -103,8 +103,8 @@ final class Container
      *
      * @throws \ReflectionException
      * @throws MissingClassException
-     * @throws \DanielDoyle\HappyUtilities\Exception\MissingConfigException
-     * @throws \DanielDoyle\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
+     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
      * @param string $className Class name to get
      * @return object
      */
