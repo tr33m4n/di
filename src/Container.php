@@ -1,33 +1,33 @@
 <?php
 
-namespace tr33m4n\HappyDi;
+namespace tr33m4n\Di;
 
-use tr33m4n\HappyDi\Container\ClassParameterResolver;
-use tr33m4n\HappyDi\Container\PreferenceResolver;
-use tr33m4n\HappyDi\Container\SharedResolver;
-use tr33m4n\HappyDi\Exception\MissingClassException;
+use tr33m4n\Di\Container\ClassParameterResolver;
+use tr33m4n\Di\Container\PreferenceResolver;
+use tr33m4n\Di\Container\SharedResolver;
+use tr33m4n\Di\Exception\MissingClassException;
 use ReflectionException;
 use ReflectionClass;
 
 /**
  * Class Container
  *
- * @package tr33m4n\HappyDi
+ * @package tr33m4n\Di
  */
 final class Container
 {
     /**
-     * @var \tr33m4n\HappyDi\Container\ClassParameterResolver
+     * @var \tr33m4n\Di\Container\ClassParameterResolver
      */
     private $classParameterResolver;
 
     /**
-     * @var \tr33m4n\HappyDi\Container\PreferenceResolver
+     * @var \tr33m4n\Di\Container\PreferenceResolver
      */
     private $preferenceResolver;
 
     /**
-     * @var \tr33m4n\HappyDi\Container\SharedResolver
+     * @var \tr33m4n\Di\Container\SharedResolver
      */
     private $sharedResolver;
 
@@ -39,9 +39,9 @@ final class Container
     /**
      * Container constructor.
      *
-     * @param \tr33m4n\HappyDi\Container\ClassParameterResolver $classParameterResolver
-     * @param \tr33m4n\HappyDi\Container\PreferenceResolver     $preferenceResolver
-     * @param \tr33m4n\HappyDi\Container\SharedResolver         $sharedResolver
+     * @param \tr33m4n\Di\Container\ClassParameterResolver $classParameterResolver
+     * @param \tr33m4n\Di\Container\PreferenceResolver     $preferenceResolver
+     * @param \tr33m4n\Di\Container\SharedResolver         $sharedResolver
      */
     public function __construct(
         ClassParameterResolver $classParameterResolver,
@@ -69,8 +69,7 @@ final class Container
      * Create instantiated class
      *
      * @throws \ReflectionException
-     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
-     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\Utilities\Exception\RegistryException
      * @param string $className Class name
      * @return object
      */
@@ -103,8 +102,7 @@ final class Container
      *
      * @throws \ReflectionException
      * @throws MissingClassException
-     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
-     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\Utilities\Exception\RegistryException
      * @param string $className Class name to get
      * @return object
      */
@@ -129,6 +127,6 @@ final class Container
             return $this->sharedInstantiatedClasses[$className] = $instantiatedClass;
         }
 
-        return $instantiatedClass;
+        return $this->sharedInstantiatedClasses[$className] = $this->createInstantiatedClass($className);
     }
 }

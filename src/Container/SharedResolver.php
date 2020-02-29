@@ -1,11 +1,11 @@
 <?php
 
-namespace tr33m4n\HappyDi\Container;
+namespace tr33m4n\Di\Container;
 
 /**
  * Class SharedResolver
  *
- * @package tr33m4n\HappyDi\Container
+ * @package tr33m4n\Di\Container
  */
 class SharedResolver
 {
@@ -17,15 +17,12 @@ class SharedResolver
     /**
      * Resolve shared
      *
-     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
-     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\Utilities\Exception\RegistryException
      * @param string $className Class/interface name
      * @return bool
      */
     public function resolve(string $className) : bool
     {
-        $sharedConfig = config('di')->get(self::CONFIG_KEY);
-        return !array_key_exists($className, $sharedConfig)
-            || (array_key_exists($className, $sharedConfig) && $sharedConfig[$className]);
+        return (bool) config('di')->get(self::CONFIG_KEY)->get($className);
     }
 }

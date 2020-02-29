@@ -1,12 +1,12 @@
 <?php
 
-namespace tr33m4n\HappyDi;
+namespace tr33m4n\Di;
 
 use PHPUnit\Framework\TestCase;
-use tr33m4n\HappyDi\Exception\MissingClassException;
-use tr33m4n\HappyUtilities\Exception\RegistryException;
-use tr33m4n\HappyUtilities\Exception\MissingConfigException;
-use tr33m4n\HappyUtilities\Registry;
+use tr33m4n\Di\Exception\MissingClassException;
+use tr33m4n\Utilities\Exception\RegistryException;
+use tr33m4n\Utilities\Exception\MissingConfigException;
+use tr33m4n\Utilities\Registry;
 
 /**
  * ContainerTest class
@@ -67,7 +67,7 @@ final class ContainerTest extends TestCase
     public function validDataProvider() : array
     {
         return [
-            ['\tr33m4n\HappyUtilities\Registry', new Registry()]
+            ['\tr33m4n\Utilities\Registry', new Registry()]
         ];
     }
 

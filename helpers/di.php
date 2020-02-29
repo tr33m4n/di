@@ -1,18 +1,18 @@
 <?php
 
-use tr33m4n\HappyDi\Container;
-use tr33m4n\HappyUtilities\Registry;
+use tr33m4n\Di\Container;
+use tr33m4n\Utilities\Registry;
 
 /**
  * Helper function for easily accessing the DI container
  *
- * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
- * @return \tr33m4n\HappyDi\Container|mixed|null
+ * @throws \tr33m4n\Utilities\Exception\RegistryException
+ * @return \tr33m4n\Di\Container
  */
-function di()
+function di() : Container
 {
-    if ($registeredContainer = Registry::get('container')) {
-        return $registeredContainer;
+    if (($container = Registry::get('container')) instanceof Container) {
+        return $container;
     }
 
     $container = new Container(

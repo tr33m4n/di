@@ -1,6 +1,6 @@
 <?php
 
-use tr33m4n\HappyDi\Container;
+use tr33m4n\Di\Container;
 
 /**
  * Constructor args should be defined like the following:

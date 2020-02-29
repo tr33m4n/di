@@ -1,25 +1,35 @@
 {
-    "name": "tr33m4n/happy-di",
-    "description": "A very happy DI",
+    "name": "tr33m4n/di",
+    "description": "A basic DI container",
+    "license": "MIT",
     "authors": [
         {
             "name": "Daniel Doyle",
             "email": "tr33m4n@googlemail.com"
         }
     ],
-    "require": {
-        "tr33m4n/happy-utilities": "^v1.0"
-    },
+    "minimum-stability": "stable",
     "autoload": {
         "files": [
             "helpers/di.php"
         ],
         "psr-4": {
-            "tr33m4n\\HappyDi\\": "src/"
+            "tr33m4n\\Di\\": "src/"
         }
     },
+    "require": {
+        "php": "^7.2",
+        "tr33m4n/utilities": "^1.2"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "phpstan/phpstan": "^0.11.8"
+        "phpunit/phpunit": "^8.5",
+        "phpstan/phpstan": "^0.12.11"
+    },
+    "scripts": {
+        "test": [
+            "composer validate",
+            "vendor/bin/phpstan analyse --no-interaction --no-progress",
+            "vendor/bin/phpunit --bootstrap vendor/autoload.php tests"
+        ]
     }
 }

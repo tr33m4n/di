@@ -1,11 +1,15 @@
 <?php
 
-namespace tr33m4n\HappyDi\Container;
+namespace tr33m4n\Di\Container;
+
+use ReflectionClass;
+use ReflectionParameter;
+use tr33m4n\Utilities\Config\ConfigCollection;
 
 /**
  * Class ClassParameterResolver
  *
- * @package tr33m4n\HappyDi\Container
+ * @package tr33m4n\Di\Container
  */
 class ClassParameterResolver
 {
@@ -17,41 +21,54 @@ class ClassParameterResolver
     /**
      * Resolve class parameters by merging reflected parameters with config
      *
-     * @throws \ReflectionException
-     * @throws \tr33m4n\HappyUtilities\Exception\MissingConfigException
-     * @throws \tr33m4n\HappyUtilities\Exception\RegistryException
+     * @throws \tr33m4n\Utilities\Exception\RegistryException
      * @param \ReflectionClass $reflectionClass
      * @return array
      */
-    public function resolve(\ReflectionClass $reflectionClass) : array
+    public function resolve(ReflectionClass $reflectionClass) : array
     {
         $classConstructor = $reflectionClass->getConstructor();
-        $resolvedParameters = [];
-
         if (!$classConstructor) {
-            return $resolvedParameters;
+            return [];
         }
 
-        $parametersConfig = config('di')->get(self::CONFIG_KEY);
-        $classConfig = $parametersConfig[$reflectionClass->getName()] ?? [];
-        $classParameters = $classConstructor->getParameters();
+        $convertedParameters = $this->convertParametersToValues($classConstructor->getParameters());
 
-        foreach ($classParameters as $classParameter) {
-            switch (true) {
-                case array_key_exists($classParameter->getName(), $classConfig):
-                    $resolvedParameters[] = $classConfig[$classParameter->getName()];
-                    break;
-                case $classParameter->getClass() :
-                    $resolvedParameters[] = (string) $classParameter->getType();
-                    break;
-                case $classParameter->isDefaultValueAvailable() :
-                    $resolvedParameters[] = $classParameter->getDefaultValue();
-                    break;
-                default :
-                    $resolvedParameters[] = null;
-            }
+        $classConfig = config('di')->get(self::CONFIG_KEY)->get($reflectionClass->getName());
+        if (!$classConfig instanceof ConfigCollection) {
+            return $convertedParameters;
         }
 
-        return $resolvedParameters;
+        return array_map(function ($parameterValue, string $parameterName) use ($classConfig) {
+            return $classConfig->has($parameterName) ? $classConfig->get($parameterName) : $parameterValue;
+        }, $convertedParameters, array_keys($convertedParameters));
+    }
+
+    /**
+     * Convert parameters to values
+     *
+     * @param \ReflectionParameter[] $parameters
+     * @return mixed
+     */
+    private function convertParametersToValues(array $parameters) : array
+    {
+        return array_reduce(
+            $parameters,
+            function (array $converted, ReflectionParameter $parameter) {
+                switch (true) {
+                    case $parameter->getClass() !== null:
+                        $converted[$parameter->getName()] = $parameter->getClass()->getName();
+                        break;
+                    case $parameter->isDefaultValueAvailable():
+                        $converted[$parameter->getName()] = $parameter->getDefaultValue();
+                        break;
+                    default:
+                        $converted[$parameter->getName()] = null;
+                }
+
+                return $converted;
+            },
+            []
+        );
     }
 }
