@@ -23,9 +23,10 @@ class ClassParameterResolver
      *
      * @throws \tr33m4n\Utilities\Exception\RegistryException
      * @param \ReflectionClass $reflectionClass
+     * @param array $parameters
      * @return array
      */
-    public function resolve(ReflectionClass $reflectionClass) : array
+    public function resolve(ReflectionClass $reflectionClass, array $parameters = []) : array
     {
         $classConstructor = $reflectionClass->getConstructor();
         if (!$classConstructor) {
@@ -39,9 +40,12 @@ class ClassParameterResolver
             return $convertedParameters;
         }
 
-        return array_map(function ($parameterValue, string $parameterName) use ($classConfig) {
-            return $classConfig->has($parameterName) ? $classConfig->get($parameterName) : $parameterValue;
-        }, $convertedParameters, array_keys($convertedParameters));
+        return array_merge(
+            array_map(function ($parameterValue, string $parameterName) use ($classConfig) {
+                return $classConfig->has($parameterName) ? $classConfig->get($parameterName) : $parameterValue;
+            }, $convertedParameters, array_keys($convertedParameters)),
+            $parameters
+        );
     }
 
     /**

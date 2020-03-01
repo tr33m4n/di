@@ -70,10 +70,11 @@ final class Container
      *
      * @throws \ReflectionException
      * @throws \tr33m4n\Utilities\Exception\RegistryException
-     * @param string $className Class name
+     * @param string $className  Class name
+     * @param array  $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
-    private function createInstantiatedClass(string $className)
+    private function createInstantiatedClass(string $className, array $parameters)
     {
         $className = $this->preferenceResolver->resolve($className);
 
@@ -84,7 +85,7 @@ final class Container
         }
 
         // Resolve class params using DI config
-        $classParameters = $this->classParameterResolver->resolve($reflectionClass);
+        $classParameters = $this->classParameterResolver->resolve($reflectionClass, $parameters);
         if (empty($classParameters)) {
             return new $className;
         }
@@ -103,10 +104,11 @@ final class Container
      * @throws \ReflectionException
      * @throws MissingClassException
      * @throws \tr33m4n\Utilities\Exception\RegistryException
-     * @param string $className Class name to get
+     * @param string $className  Class name to get
+     * @param array  $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
-    public function get(string $className)
+    public function get(string $className, array $parameters = [])
     {
         // Make sure class exists
         if (!class_exists($className) && !interface_exists($className, false)) {
@@ -121,7 +123,7 @@ final class Container
         // Should the class be set as shared
         $isSetShared = $this->sharedResolver->resolve($className);
         // Instantiate class from DI
-        $instantiatedClass = $this->createInstantiatedClass($className);
+        $instantiatedClass = $this->createInstantiatedClass($className, $parameters);
 
         if ($isSetShared) {
             return $this->sharedInstantiatedClasses[$className] = $instantiatedClass;

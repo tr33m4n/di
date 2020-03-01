@@ -23,6 +23,8 @@ class SharedResolver
      */
     public function resolve(string $className) : bool
     {
-        return (bool) config('di')->get(self::CONFIG_KEY)->get($className);
+        $isShared = config('di')->get(self::CONFIG_KEY)->get($className);
+
+        return $isShared === null || $isShared;
     }
 }
