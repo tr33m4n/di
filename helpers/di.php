@@ -11,17 +11,18 @@ use tr33m4n\Utilities\Registry;
  */
 function di() : Container
 {
-    if (($container = Registry::get('container')) instanceof Container) {
-        return $container;
+    if (Registry::has(Container::REGISTRY_NAMESPACE)) {
+        return Registry::get(Container::REGISTRY_NAMESPACE);
     }
 
-    $container = new Container(
-        new Container\ClassParameterResolver(),
-        new Container\PreferenceResolver(),
-        new Container\SharedResolver()
+    Registry::set(
+        Container::REGISTRY_NAMESPACE,
+        new Container(
+            new Container\ClassParameterResolver(),
+            new Container\PreferenceResolver(),
+            new Container\SharedResolver()
+        )
     );
 
-    Registry::set('container', $container);
-
-    return $container;
+    return Registry::get(Container::REGISTRY_NAMESPACE);
 }

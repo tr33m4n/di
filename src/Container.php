@@ -17,6 +17,11 @@ use ReflectionClass;
 final class Container
 {
     /**
+     * Registry namespace
+     */
+    const REGISTRY_NAMESPACE = 'container';
+
+    /**
      * @var \tr33m4n\Di\Container\ClassParameterResolver
      */
     private $classParameterResolver;
