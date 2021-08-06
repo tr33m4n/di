@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Di;
 
+use ReflectionClass;
+use ReflectionException;
 use tr33m4n\Di\Container\ClassParameterResolver;
 use tr33m4n\Di\Container\PreferenceResolver;
 use tr33m4n\Di\Container\SharedResolver;
 use tr33m4n\Di\Exception\MissingClassException;
-use ReflectionException;
-use ReflectionClass;
 
 /**
  * Class Container
@@ -16,10 +18,7 @@ use ReflectionClass;
  */
 final class Container
 {
-    /**
-     * Registry namespace
-     */
-    const REGISTRY_NAMESPACE = 'container';
+    public const REGISTRY_NAMESPACE = 'container';
 
     /**
      * @var \tr33m4n\Di\Container\ClassParameterResolver
@@ -64,7 +63,7 @@ final class Container
      * @param mixed $classParameter Class parameter
      * @return bool
      */
-    private function canClassParameterBeInstantiated($classParameter) : bool
+    private function canClassParameterBeInstantiated($classParameter): bool
     {
         return is_string($classParameter)
             && (class_exists($classParameter) || interface_exists($classParameter, false));
@@ -75,11 +74,12 @@ final class Container
      *
      * @throws \ReflectionException
      * @throws \tr33m4n\Utilities\Exception\RegistryException
-     * @param string $className  Class name
-     * @param array  $parameters Additional parameters to pass when instantiating the class
+     * @throws \tr33m4n\Di\Exception\MissingClassException
+     * @param class-string         $className  Class name
+     * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
-    private function createInstantiatedClass(string $className, array $parameters)
+    private function createInstantiatedClass(string $className, array $parameters): object
     {
         $className = $this->preferenceResolver->resolve($className);
 
@@ -92,7 +92,7 @@ final class Container
         // Resolve class params using DI config
         $classParameters = $this->classParameterResolver->resolve($reflectionClass, $parameters);
         if (empty($classParameters)) {
-            return new $className;
+            return new $className();
         }
 
         // Return new instance with resolved arguments
@@ -109,11 +109,11 @@ final class Container
      * @throws \ReflectionException
      * @throws MissingClassException
      * @throws \tr33m4n\Utilities\Exception\RegistryException
-     * @param string $className  Class name to get
-     * @param array  $parameters Additional parameters to pass when instantiating the class
+     * @param string               $className  Class name to get
+     * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
-    public function get(string $className, array $parameters = [])
+    public function get(string $className, array $parameters = []): object
     {
         // Make sure class exists
         if (!class_exists($className) && !interface_exists($className, false)) {
@@ -125,12 +125,11 @@ final class Container
             return $this->sharedInstantiatedClasses[$className];
         }
 
-        // Should the class be set as shared
-        $isSetShared = $this->sharedResolver->resolve($className);
         // Instantiate class from DI
         $instantiatedClass = $this->createInstantiatedClass($className, $parameters);
 
-        if ($isSetShared) {
+        // Should the class be set as shared
+        if ($this->sharedResolver->resolve($className)) {
             return $this->sharedInstantiatedClasses[$className] = $instantiatedClass;
         }
 

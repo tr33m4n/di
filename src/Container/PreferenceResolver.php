@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Di\Container;
 
 /**
@@ -12,7 +14,7 @@ class PreferenceResolver
     /**
      * Preferences config key
      */
-    const CONFIG_KEY = 'preferences';
+    public const CONFIG_KEY = 'preferences';
 
     /**
      * Resolve class preference
@@ -21,7 +23,7 @@ class PreferenceResolver
      * @param string $className Class/interface name
      * @return string
      */
-    public function resolve(string $className) : string
+    public function resolve(string $className): string
     {
         return config('di')->get(self::CONFIG_KEY)->get($className) ?: $className;
     }

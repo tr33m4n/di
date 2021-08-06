@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use tr33m4n\Di\Container;
 use tr33m4n\Utilities\Registry;

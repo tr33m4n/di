@@ -4,4 +4,4 @@ parameters:
     excludes_analyse:
         - *Test*
         - *tests*
-    level: 5
+    level: max
