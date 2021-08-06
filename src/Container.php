@@ -18,8 +18,6 @@ use tr33m4n\Di\Exception\MissingClassException;
  */
 final class Container
 {
-    public const REGISTRY_NAMESPACE = 'container';
-
     /**
      * @var \tr33m4n\Di\Container\ClassParameterResolver
      */
@@ -79,9 +77,13 @@ final class Container
      * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
-    private function createInstantiatedClass(string $className, array $parameters): object
+    public function create(string $className, array $parameters): object
     {
+        // Resolve class name and ensure class exists
         $className = $this->preferenceResolver->resolve($className);
+        if (!class_exists($className) && !interface_exists($className, false)) {
+            throw new MissingClassException(sprintf('%s does not exist!', $className));
+        }
 
         // Ensure class is instantiable
         $reflectionClass = new ReflectionClass($className);
@@ -104,33 +106,27 @@ final class Container
     }
 
     /**
-     * Get class from DI
+     * Get class from DI. Will be cached
      *
      * @throws \ReflectionException
      * @throws MissingClassException
      * @throws \tr33m4n\Utilities\Exception\RegistryException
-     * @param string               $className  Class name to get
+     * @param class-string         $className  Class name to get
      * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
     public function get(string $className, array $parameters = []): object
     {
-        // Make sure class exists
-        if (!class_exists($className) && !interface_exists($className, false)) {
-            throw new MissingClassException(sprintf('%s does not exist!', $className));
-        }
-
         // Return shared class if already instantiated
         if (array_key_exists($className, $this->sharedInstantiatedClasses)) {
             return $this->sharedInstantiatedClasses[$className];
         }
 
         // Instantiate class from DI
-        $instantiatedClass = $this->createInstantiatedClass($className, $parameters);
-
+        $instantiatedClass = $this->create($className, $parameters);
         // Should the class be set as shared
         if ($this->sharedResolver->resolve($className)) {
-            return $this->sharedInstantiatedClasses[$className] = $instantiatedClass;
+            return $this->sharedInstantiatedClasses[$className] = $this->create($className, $parameters);
         }
 
         return $instantiatedClass;

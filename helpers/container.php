@@ -9,7 +9,7 @@ use tr33m4n\Di\Container;
  *
  * @return \tr33m4n\Di\Container
  */
-function di() : Container
+function container(): Container
 {
     static $container = null;
     if ($container instanceof Container) {

@@ -15,7 +15,7 @@
     },
     "autoload": {
         "files": [
-            "helpers/di.php"
+            "helpers/container.php"
         ],
         "psr-4": {
             "tr33m4n\\Di\\": "src/"
