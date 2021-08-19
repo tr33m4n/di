@@ -8,7 +8,6 @@ use ReflectionClass;
 use ReflectionException;
 use tr33m4n\Di\Container\GetParameters;
 use tr33m4n\Di\Container\GetPreference;
-use tr33m4n\Di\Container\IsShared;
 use tr33m4n\Di\Exception\MissingClassException;
 
 /**
@@ -29,30 +28,22 @@ final class Container
     private $getPreference;
 
     /**
-     * @var \tr33m4n\Di\Container\IsShared
+     * @var object[]
      */
-    private $isShared;
-
-    /**
-     * @var array[]
-     */
-    private $sharedInstantiatedClasses = [];
+    private $instantiatedClasses = [];
 
     /**
      * Container constructor.
      *
      * @param \tr33m4n\Di\Container\GetParameters $getParameters
-     * @param \tr33m4n\Di\Container\GetPreference          $getPreference
-     * @param \tr33m4n\Di\Container\IsShared               $isShared
+     * @param \tr33m4n\Di\Container\GetPreference $getPreference
      */
     public function __construct(
         GetParameters $getParameters,
-        GetPreference $getPreference,
-        IsShared $isShared
+        GetPreference $getPreference
     ) {
         $this->getParameters = $getParameters;
         $this->getPreference = $getPreference;
-        $this->isShared = $isShared;
     }
 
     /**
@@ -77,7 +68,7 @@ final class Container
      * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
      * @return object
      */
-    public function create(string $className, array $parameters): object
+    public function create(string $className, array $parameters = []): object
     {
         // Resolve preference and ensure class exists
         $className = $this->getPreference->execute($className);
@@ -111,30 +102,19 @@ final class Container
      * @throws \ReflectionException
      * @throws \tr33m4n\Di\Exception\MissingClassException
      * @throws \tr33m4n\Utilities\Exception\AdapterException
-     * @param class-string         $className  Class name to get
-     * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
+     * @param class-string $className Class name to get
      * @return object
      */
-    public function get(string $className, array $parameters = []): object
+    public function get(string $className): object
     {
+        $className = ltrim($className, '\\');
+
         // Return shared class if already instantiated and parameters are the same
-        if (
-            array_key_exists($className, $this->sharedInstantiatedClasses)
-            && $this->sharedInstantiatedClasses[$className]['parameters'] == $parameters
-        ) {
-            return $this->sharedInstantiatedClasses[$className]['instantiated_class'];
+        if (array_key_exists($className, $this->instantiatedClasses)) {
+            return $this->instantiatedClasses[$className];
         }
 
-        // Instantiate class from DI
-        $instantiatedClass = $this->create($className, $parameters);
-        // Should the class be set as shared
-        if ($this->isShared->execute($className)) {
-            $this->sharedInstantiatedClasses[$className] = [
-                'instantiated_class' => $instantiatedClass,
-                'parameters' => $parameters
-            ];
-        }
-
-        return $instantiatedClass;
+        /** @var class-string $className */
+        return $this->instantiatedClasses[$className] = $this->create($className);
     }
 }

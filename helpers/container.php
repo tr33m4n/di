@@ -18,7 +18,6 @@ function container(): Container
 
     return $container = new Container(
         new Container\GetParameters(),
-        new Container\GetPreference(),
-        new Container\IsShared()
+        new Container\GetPreference()
     );
 }
