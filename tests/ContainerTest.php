@@ -36,6 +36,7 @@ final class ContainerTest extends TestCase
      * @throws \ReflectionException
      * @throws \tr33m4n\Di\Exception\MissingClassException
      * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @param string $input
      * @param object $expected
      * @return void
@@ -52,6 +53,7 @@ final class ContainerTest extends TestCase
      * @throws \ReflectionException
      * @throws \tr33m4n\Di\Exception\MissingClassException
      * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @return void
      */
     public function assertContainerThrowsError(): void

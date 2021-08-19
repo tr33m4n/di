@@ -8,6 +8,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
 use tr33m4n\Utilities\Config\ConfigCollection;
+use tr33m4n\Utilities\Exception\ConfigException;
 
 /**
  * Class GetParameters
@@ -26,6 +27,7 @@ class GetParameters
      *
      * @throws \ReflectionException
      * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @param \ReflectionClass<object> $reflectionClass
      * @param array<string, mixed>     $parameters
      * @return array<int|string, mixed>
@@ -39,8 +41,12 @@ class GetParameters
 
         $convertedParameters = $this->convertParametersToValues($classConstructor->getParameters());
 
-        $classConfig = config('di')->get(self::CONFIG_KEY)->get($reflectionClass->getName());
-        if (!$classConfig instanceof ConfigCollection) {
+        try {
+            $classConfig = config('di')->get(self::CONFIG_KEY)->get($reflectionClass->getName());
+            if (!$classConfig instanceof ConfigCollection) {
+                throw new ConfigException();
+            }
+        } catch (ConfigException $configException) {
             return $convertedParameters;
         }
 

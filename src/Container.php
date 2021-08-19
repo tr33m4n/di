@@ -64,6 +64,7 @@ final class Container
      * @throws \ReflectionException
      * @throws \tr33m4n\Di\Exception\MissingClassException
      * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @param class-string         $className  Class name
      * @param array<string, mixed> $parameters Additional parameters to pass when instantiating the class
      * @return object
@@ -102,6 +103,7 @@ final class Container
      * @throws \ReflectionException
      * @throws \tr33m4n\Di\Exception\MissingClassException
      * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @param class-string $className Class name to get
      * @return object
      */
