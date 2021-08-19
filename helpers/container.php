@@ -17,8 +17,8 @@ function container(): Container
     }
 
     return $container = new Container(
-        new Container\ClassParameterResolver(),
-        new Container\PreferenceResolver(),
-        new Container\SharedResolver()
+        new Container\GetParameters(),
+        new Container\GetPreference(),
+        new Container\IsShared()
     );
 }

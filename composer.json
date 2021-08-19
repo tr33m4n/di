@@ -18,7 +18,8 @@
             "helpers/container.php"
         ],
         "psr-4": {
-            "tr33m4n\\Di\\": "src/"
+            "tr33m4n\\Di\\": "src/",
+            "tr33m4n\\Di\\Tests\\": "tests/"
         }
     },
     "require": {

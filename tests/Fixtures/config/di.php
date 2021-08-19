@@ -16,7 +16,7 @@ use tr33m4n\Di\Container;
  *      'param2' => \Class\Namespace\Test3
  */
 return [
-    Container\PreferenceResolver::CONFIG_KEY => [],
-    Container\ClassParameterResolver::CONFIG_KEY => [],
-    Container\SharedResolver::CONFIG_KEY => []
+    Container\GetPreference::CONFIG_KEY => [],
+    Container\GetParameters::CONFIG_KEY => [],
+    Container\IsShared::CONFIG_KEY => []
 ];

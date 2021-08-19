@@ -10,11 +10,11 @@ use ReflectionParameter;
 use tr33m4n\Utilities\Config\ConfigCollection;
 
 /**
- * Class ClassParameterResolver
+ * Class GetParameters
  *
  * @package tr33m4n\Di\Container
  */
-class ClassParameterResolver
+class GetParameters
 {
     /**
      * Parameters config key
@@ -22,15 +22,15 @@ class ClassParameterResolver
     public const CONFIG_KEY = 'parameters';
 
     /**
-     * Resolve class parameters by merging reflected parameters with config
+     * Get class parameters by merging reflected parameters with config
      *
-     * @throws \tr33m4n\Utilities\Exception\RegistryException
      * @throws \ReflectionException
-     * @param \ReflectionClass     $reflectionClass
-     * @param array<string, mixed> $parameters
-     * @return array<int, mixed>
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
+     * @param \ReflectionClass<object> $reflectionClass
+     * @param array<string, mixed>     $parameters
+     * @return array<int|string, mixed>
      */
-    public function resolve(ReflectionClass $reflectionClass, array $parameters = []): array
+    public function execute(ReflectionClass $reflectionClass, array $parameters = []): array
     {
         $classConstructor = $reflectionClass->getConstructor();
         if (!$classConstructor instanceof ReflectionMethod) {
@@ -70,6 +70,9 @@ class ClassParameterResolver
                         break;
                     case $parameter->isDefaultValueAvailable():
                         $converted[$parameter->getName()] = $parameter->getDefaultValue();
+                        break;
+                    case $parameter->isVariadic():
+                        $converted[$parameter->getName()] = [];
                         break;
                     default:
                         $converted[$parameter->getName()] = null;

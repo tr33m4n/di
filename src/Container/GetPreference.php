@@ -5,25 +5,22 @@ declare(strict_types=1);
 namespace tr33m4n\Di\Container;
 
 /**
- * Class PreferenceResolver
+ * Class GetPreference
  *
  * @package tr33m4n\Di\Container
  */
-class PreferenceResolver
+class GetPreference
 {
-    /**
-     * Preferences config key
-     */
     public const CONFIG_KEY = 'preferences';
 
     /**
-     * Resolve class preference
+     * Get class preference
      *
-     * @throws \tr33m4n\Utilities\Exception\RegistryException
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @param string $className Class/interface name
      * @return string
      */
-    public function resolve(string $className): string
+    public function execute(string $className): string
     {
         return config('di')->get(self::CONFIG_KEY)->get($className) ?: $className;
     }

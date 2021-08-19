@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace tr33m4n\Di\Tests;
 
 use PHPUnit\Framework\TestCase;
 use tr33m4n\Di\Exception\MissingClassException;
 use tr33m4n\Di\Tests\Fixtures;
-use tr33m4n\Utilities\Exception\RegistryException;
-use tr33m4n\Utilities\Registry;
+use tr33m4n\Utilities\Data\DataCollection;
 
 /**
  * Class ContainerTest
@@ -20,56 +21,56 @@ final class ContainerTest extends TestCase
      *
      * @return void
      */
-    public function setUp() : void
+    public function setUp(): void
     {
         if (!defined('ROOT_CONFIG_PATH')) {
-            define('ROOT_CONFIG_PATH', __DIR__ . '/../fixtures/config');
+            define('ROOT_CONFIG_PATH', __DIR__ . '/Fixtures/config');
         }
     }
 
     /**
      * Assert that the container returns requested class
-     * 
+     *
      * @test
      * @dataProvider validDataProvider
      * @throws \ReflectionException
-     * @throws MissingClassException
-     * @throws RegistryException
+     * @throws \tr33m4n\Di\Exception\MissingClassException
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @param string $input
      * @param object $expected
      * @return void
      */
-    public function assertContainerReturnsRequestedClass($input, $expected) : void
+    public function assertContainerReturnsRequestedClass(string $input, object $expected): void
     {
-        $this->assertEquals(di()->get($input), $expected);
+        $this->assertEquals(container()->get($input), $expected);
     }
 
     /**
      * Assert that the container throws error if class name is invalid or does not exist
-     * 
+     *
      * @test
      * @throws \ReflectionException
-     * @throws MissingClassException
-     * @throws RegistryException
+     * @throws \tr33m4n\Di\Exception\MissingClassException
+     * @throws \tr33m4n\Utilities\Exception\AdapterException
      * @return void
      */
-    public function assertContainerThrowsError() : void
+    public function assertContainerThrowsError(): void
     {
         $this->expectException(MissingClassException::class);
-        di()->get('abcd');
+        container()->get('abcd');
     }
 
     /**
      * Valid data provider
-     * 
+     *
      * @return array
      */
-    public function validDataProvider() : array
+    public function validDataProvider(): array
     {
         return [
             [
-                Registry::class,
-                new Registry()
+                DataCollection::class,
+                new DataCollection()
             ],
             [
                 Fixtures\BasicInstantiation\ParentClass::class,
