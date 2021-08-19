@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace tr33m4n\Di\Container;
 
+use tr33m4n\Utilities\Exception\ConfigException;
+
 /**
  * Class GetPreference
  *
@@ -22,6 +24,10 @@ class GetPreference
      */
     public function execute(string $className): string
     {
-        return config('di')->get(self::CONFIG_KEY)->get($className) ?: $className;
+        try {
+            return config('di')->get(self::CONFIG_KEY)->get($className);
+        } catch (ConfigException $configException) {
+            return $className;
+        }
     }
 }
