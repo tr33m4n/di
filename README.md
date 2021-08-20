@@ -13,6 +13,9 @@ return [
         \Some\Class\To\Bind::class => [
             'testParam' => 'something',
             'anotherClass' => \Some\Class\Argument::class 
+        ],
+        \Some\Class\Argument::class => [
+            'anotherTestParam' => 'somethingElse'
         ]
     ]
 ];
@@ -53,4 +56,3 @@ $myInitialisedClassWithParameters = $container->create(\Some\Class\To\Create::cl
 ## Todo
 - [ ] Flesh out configuration instructions
 - [ ] Add helper function instructions to README
-- [ ] Fix parameter iteration
