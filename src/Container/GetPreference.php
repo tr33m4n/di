@@ -9,8 +9,6 @@ use tr33m4n\Di\Exception\ConfigException;
 
 final class GetPreference
 {
-    public const CONFIG_KEY = 'preferences';
-
     public function __construct(
         private readonly Config $config
     ) {
@@ -25,7 +23,7 @@ final class GetPreference
     public function execute(string $className): string
     {
         try {
-            $preference = $this->config->get(self::CONFIG_KEY)->get($className);
+            $preference = $this->config->getPreferences()->get($className);
             if (!is_string($preference)) {
                 return $className;
             }

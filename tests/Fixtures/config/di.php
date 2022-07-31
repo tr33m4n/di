@@ -1,6 +1,8 @@
 <?php
 
-use tr33m4n\Di\Container;
+declare(strict_types=1);
+
+use tr33m4n\Di\Config;
 
 /**
  * Constructor args should be defined like the following:
@@ -16,6 +18,6 @@ use tr33m4n\Di\Container;
  *      'param2' => \Class\Namespace\Test3
  */
 return [
-    Container\GetPreference::CONFIG_KEY => [],
-    Container\GetParameters::CONFIG_KEY => []
+    Config::PREFERENCES_CONFIG_KEY => [],
+    Config::PARAMETERS_CONFIG_KEY => []
 ];

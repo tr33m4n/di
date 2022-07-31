@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace tr33m4n\Di;
 
-use tr33m4n\Di\Config\FileAdapterInterface;
-use tr33m4n\Di\Config\PhpFileAdapter;
 use tr33m4n\Di\Config\ConfigCollection;
+use tr33m4n\Di\Config\FileAdapter;
+use tr33m4n\Di\Config\FileAdapterInterface;
+use tr33m4n\Di\Exception\ConfigException;
 
 final class Config
 {
+    public const PREFERENCES_CONFIG_KEY = 'preferences';
+
+    public const PARAMETERS_CONFIG_KEY = 'parameters';
+
     /**
      * @var array<string, \tr33m4n\Di\Config\ConfigCollection>
      */
@@ -19,21 +24,47 @@ final class Config
      * Config constructor.
      *
      * @throws \tr33m4n\Di\Exception\AdapterException
-     * @param string[]                                $configPaths
+     * @param string[] $configPaths
      */
     public function __construct(
         private array $configPaths = [],
-        private readonly FileAdapterInterface $fileAdapter = new PhpFileAdapter()
+        private readonly FileAdapterInterface $fileAdapter = new FileAdapter()
     ) {
-        $this->initConfig();
+        $this->config = $this->processConfigPaths($this->initConfigPaths());
     }
 
     /**
-     * Get config by type
+     * Get preferences
+     *
+     * @throws \tr33m4n\Di\Exception\ConfigException
      */
-    public function get(string $configPath): ConfigCollection
+    public function getPreferences(): ConfigCollection
     {
-        return $this->config[$configPath];
+        return $this->getConfig(self::PREFERENCES_CONFIG_KEY);
+    }
+
+    /**
+     * Get parameters
+     *
+     * @throws \tr33m4n\Di\Exception\ConfigException
+     */
+    public function getParameters(): ConfigCollection
+    {
+        return $this->getConfig(self::PARAMETERS_CONFIG_KEY);
+    }
+
+    /**
+     * Get config by key
+     *
+     * @throws \tr33m4n\Di\Exception\ConfigException
+     */
+    private function getConfig(string $key): ConfigCollection
+    {
+        if (!array_key_exists($key, $this->config)) {
+            throw new ConfigException('DI config has not been initialised');
+        }
+
+        return $this->config[$key];
     }
 
     /**
@@ -48,15 +79,15 @@ final class Config
             glob(
                 rtrim($configPath, DIRECTORY_SEPARATOR) // Sanitise config paths and append extension
                 . DIRECTORY_SEPARATOR
-                . '*'
-                . '.'
-                . $this->fileAdapter::getFileExtension()
+                . FileAdapterInterface::FILE_NAME
             ) ?: [],
-            function (array $configFiles, string $configFilePath): array {
-                $configFiles[basename($configFilePath, '.' . $this->fileAdapter::getFileExtension())] =
-                    new ConfigCollection($this->fileAdapter->read($configFilePath));
-
-                return $configFiles;
+            function (array $mergedConfig, string $configFilePath): array {
+                return array_map(
+                    static fn ($configValue) => is_array($configValue)
+                        ? new ConfigCollection($configValue)
+                        : $configValue,
+                    array_merge_recursive($mergedConfig, $this->fileAdapter->read($configFilePath))
+                );
             },
             []
         );
@@ -74,20 +105,10 @@ final class Config
         return array_reduce(
             $configPaths,
             function (array $configPaths, string $configPath): array {
-                return array_merge($configPaths, $this->processConfigPath($configPath));
+                return array_merge_recursive($configPaths, $this->processConfigPath($configPath));
             },
             []
         );
-    }
-
-    /**
-     * Init config
-     *
-     * @throws \tr33m4n\Di\Exception\AdapterException
-     */
-    private function initConfig(): void
-    {
-        $this->config = $this->processConfigPaths($this->initConfigPaths());
     }
 
     /**

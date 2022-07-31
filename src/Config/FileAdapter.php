@@ -6,17 +6,15 @@ namespace tr33m4n\Di\Config;
 
 use tr33m4n\Di\Exception\AdapterException;
 
-final class PhpFileAdapter implements FileAdapterInterface
+final class FileAdapter implements FileAdapterInterface
 {
-    public const FILE_EXTENSION = 'php';
-
     /**
      * @inheritDoc
      */
     public function read(string $filePath): array
     {
         if (!$this->validate($filePath)) {
-            throw new AdapterException(sprintf('File type is invalid %s', $filePath));
+            throw new AdapterException(sprintf('File name is invalid %s', $filePath));
         }
 
         $fileContents = include $filePath;
@@ -32,14 +30,6 @@ final class PhpFileAdapter implements FileAdapterInterface
      */
     public function validate(string $filePath): bool
     {
-        return file_exists($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) === self::FILE_EXTENSION;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getFileExtension(): string
-    {
-        return self::FILE_EXTENSION;
+        return file_exists($filePath) && pathinfo($filePath, PATHINFO_BASENAME) === self::FILE_NAME;
     }
 }

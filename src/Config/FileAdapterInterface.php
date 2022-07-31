@@ -6,6 +6,8 @@ namespace tr33m4n\Di\Config;
 
 interface FileAdapterInterface
 {
+    public const FILE_NAME = 'di.php';
+
     /**
      * Read file
      *
@@ -18,9 +20,4 @@ interface FileAdapterInterface
      * Validate file
      */
     public function validate(string $filePath): bool;
-
-    /**
-     * Get adapter file extension
-     */
-    public static function getFileExtension(): string;
 }

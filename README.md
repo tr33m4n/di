@@ -25,12 +25,14 @@ The simplest usage is without providing any configuration. All constructor argum
 ```php
 <?php
 
+use tr33m4n\Di\Config;
 use tr33m4n\Di\Container;
 use tr33m4n\Di\Container\GetParameters;
 use tr33m4n\Di\Container\GetPreference;
 
 // Manually initialising the container
-$container = new Container(new GetParameters(), new GetPreference());
+$config = new Config();
+$container = new Container(new GetParameters($config), new GetPreference($config));
 
 // `get` class from container (class constructor arguments will auto-wire). The instantiated class will be cached for subsequent calls
 $myInitialisedClass = $container->get(\Some\Class\To\Get::class);
@@ -40,12 +42,14 @@ New instances of a class can be created outside the configured container using t
 ```php
 <?php
 
+use tr33m4n\Di\Config;
 use tr33m4n\Di\Container;
 use tr33m4n\Di\Container\GetParameters;
 use tr33m4n\Di\Container\GetPreference;
 
 // Manually initialising the container
-$container = new Container(new GetParameters(), new GetPreference());
+$config = new Config();
+$container = new Container(new GetParameters($config), new GetPreference($config));
 
 // Create a new instance of a class which is not cached, with all constructor arguments auto-wired
 $myInitialisedClass = $container->create(\Some\Class\To\Create::class);

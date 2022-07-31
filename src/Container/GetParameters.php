@@ -7,14 +7,14 @@ namespace tr33m4n\Di\Container;
 use Closure;
 use ReflectionClass;
 use ReflectionMethod;
+use ReflectionNamedType;
 use ReflectionParameter;
 use tr33m4n\Di\Config;
 use tr33m4n\Di\Config\ConfigCollection;
+use tr33m4n\Di\Exception\ConfigException;
 
 final class GetParameters
 {
-    public const CONFIG_KEY = 'parameters';
-
     public function __construct(
         private readonly Config $config
     ) {
@@ -24,7 +24,6 @@ final class GetParameters
      * Get class parameters by merging reflected parameters with config
      *
      * @throws \ReflectionException
-     * @throws \tr33m4n\Di\Exception\ConfigException
      * @param \ReflectionClass<object> $reflectionClass
      * @param array<string, mixed>     $parameters
      * @return array<int|string, mixed>
@@ -38,8 +37,12 @@ final class GetParameters
 
         $convertedParameters = $this->convertParametersToValues($reflectionMethod->getParameters());
 
-        $classConfig = $this->config->get(self::CONFIG_KEY)->get($reflectionClass->getName());
-        if (!$classConfig instanceof ConfigCollection) {
+        try {
+            $classConfig = $this->config->getParameters()->get($reflectionClass->getName());
+            if (!$classConfig instanceof ConfigCollection) {
+                return $convertedParameters;
+            }
+        } catch (ConfigException) {
             return $convertedParameters;
         }
 
@@ -65,8 +68,10 @@ final class GetParameters
         return array_reduce(
             $parameters,
             static function (array $converted, ReflectionParameter $reflectionParameter): array {
+                $reflectionType = $reflectionParameter->getType();
+
                 $converted[$reflectionParameter->getName()] = match (true) {
-                    $reflectionParameter->getClass() !== null => $reflectionParameter->getClass()->getName(),
+                    $reflectionType instanceof ReflectionNamedType => $reflectionType->getName(),
                     $reflectionParameter->isDefaultValueAvailable() => $reflectionParameter->getDefaultValue(),
                     $reflectionParameter->isVariadic() => [],
                     default => null,
