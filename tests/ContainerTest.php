@@ -5,15 +5,10 @@ declare(strict_types=1);
 namespace tr33m4n\Di\Tests;
 
 use PHPUnit\Framework\TestCase;
+use tr33m4n\Di\Config\ConfigCollection;
 use tr33m4n\Di\Exception\MissingClassException;
 use tr33m4n\Di\Tests\Fixtures;
-use tr33m4n\Utilities\Data\DataCollection;
 
-/**
- * Class ContainerTest
- *
- * @package tr33m4n\Di\Tests
- */
 final class ContainerTest extends TestCase
 {
     /**
@@ -34,9 +29,8 @@ final class ContainerTest extends TestCase
      * @test
      * @dataProvider validDataProvider
      * @throws \ReflectionException
+     * @throws \tr33m4n\Di\Exception\ConfigException
      * @throws \tr33m4n\Di\Exception\MissingClassException
-     * @throws \tr33m4n\Utilities\Exception\AdapterException
-     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @param string $input
      * @param object $expected
      * @return void
@@ -51,9 +45,8 @@ final class ContainerTest extends TestCase
      *
      * @test
      * @throws \ReflectionException
+     * @throws \tr33m4n\Di\Exception\ConfigException
      * @throws \tr33m4n\Di\Exception\MissingClassException
-     * @throws \tr33m4n\Utilities\Exception\AdapterException
-     * @throws \tr33m4n\Utilities\Exception\ConfigException
      * @return void
      */
     public function assertContainerThrowsError(): void
@@ -71,8 +64,8 @@ final class ContainerTest extends TestCase
     {
         return [
             [
-                DataCollection::class,
-                new DataCollection()
+                ConfigCollection::class,
+                new ConfigCollection()
             ],
             [
                 Fixtures\BasicInstantiation\ParentClass::class,

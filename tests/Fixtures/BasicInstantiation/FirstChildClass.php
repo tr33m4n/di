@@ -4,11 +4,11 @@ namespace tr33m4n\Di\Tests\Fixtures\BasicInstantiation;
 
 class FirstChildClass
 {
-    private $secondChildClass;
+    private SecondChildClass $secondChildClass;
 
-    private $secondChildClass2;
+    private SecondChildClass2 $secondChildClass2;
 
-    private $secondChildClass3;
+    private SecondChildClass3 $secondChildClass3;
 
     public function __construct(
         SecondChildClass $secondChildClass,
