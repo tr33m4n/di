@@ -6,7 +6,7 @@ namespace tr33m4n\Di\Exception;
 
 use Exception;
 
-final class MissingClassException extends Exception
+final class AdapterException extends Exception
 {
     //
 }
